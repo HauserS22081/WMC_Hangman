@@ -1,4 +1,24 @@
 package at.htlgkr.hangman.pvsc;
 
+import java.util.List;
+import java.util.Random;
+
 public class PvsCController {
+    private final List<String> englishWords;
+    private final List<String> germanWords;
+    private final Random random;
+
+    public PvsCController() {
+        this.englishWords = List.of("abruptly", "absurd", "abyss", "affix", "askew", "avenue", "awkward", "axiom", "azure", "bagpipes", "bandwagon", "banjo", "bayou", "beekeeper", "blitz", "blizzard", "blink", "boggle", "bookworm", "boxcar", "boxful", "buckaroo", "buffalo", "buffoon", "buxom", "buzzard", "buzzing", "buzzwords", "caliph", "cobweb", "cockiness", "croquet", "crypt", "curacao", "cycle", "daiquiri", "dirndl", "disavow", "dizzying", "duplex", "dwarves", "embezzle", "equip", "espionage", "euouae", "exodus", "faking", "fishhook", "fixable", "fjord", "flapjack", "flopping", "fluffiness", "flyby", "foxglove", "frazzled", "frizzled", "fuchsia", "funny", "gabby", "galaxy", "galvanize", "gazebo", "giaour", "gizmo", "glowworm", "glyph", "gnarly", "gnostic", "gossip", "grogginess", "haiku", "haphazard", "hyphen", "iatrogenic", "icebox", "injury", "ivory", "ivy", "jackpot", "jaundice", "jawbreaker", "jaywalk", "jazziest", "jazzy", "jelly", "jigsaw", "jinx", "jiujitsu", "jockey", "jogging", "joking", "jovial", "joyful", "juicy", "jukebox", "jumbo", "kayak", "kazoo", "keyhole", "khaki", "kilobyte", "kiosk", "kitsch", "kiwifruit", "klutz", "knapsack", "larynx", "lengths", "lucky", "luxury", "lymph", "marquis", "matrix", "megahertz", "microwave", "mnemonic", "mystify", "naphtha", "nightclub", "nowadays", "numbskull", "nymph", "onyx", "ovary", "oxidize", "oxygen", "pajama", "peekaboo", "phlegm", "pixel", "pizazz", "pneumonia", "polka", "pshaw", "psyche", "puppy", "puzzling", "quartz", "queue", "quips", "quixotic", "quiz", "quizzes", "quorum", "razzmatazz", "rhubarb", "rhythm", "rickshaw", "schnapps", "scratch", "shiv", "snazzy", "sphinx", "spritz", "squawk", "staff", "strength", "strengths", "stretch", "stronghold", "stymied", "subway", "swivel", "syndrome", "thriftless", "thumbscrew", "topaz", "transcript", "transgress", "transplant", "triphthong", "twelfth", "twelfths", "unknown", "unworthy", "unzip", "uptown", "vaporize", "vixen", "vodka", "voodoo", "vortex", "voyeurism", "walkway", "waltz", "wave", "wavy", "waxy", "wellspring", "wheezy", "whiskey", "whizzing", "whomever", "wimpy", "witchcraft", "wizard", "woozy", "wristwatch", "wyvern", "xylophone", "yachtsman", "yippee", "yoked", "youthful", "yummy", "zephyr", "zigzag", "zigzagging", "zilch", "zipper", "zodiac", "zombie");
+        this.germanWords = List.of("Abend", "Abgrund", "Acker", "Adler", "Affe", "Alptraum", "Ampel", "Anfang", "Angst", "Apfel", "Arbeit", "Arm", "Arzt", "Auge", "Auto", "Baden", "Ball", "Bär", "Baum", "Beben", "Berg", "Besen", "Bett", "Biene", "Birne", "Blatt", "Blitz", "Blume", "Boot", "Braten", "Brief", "Brille", "Brot", "Buch", "Bus", "Chef", "Dach", "Dame", "Decke", "Ding", "Donner", "Dorf", "Dose", "Drache", "Durst", "Ehre", "Ei", "Eichhörnchen", "Eimer", "Eis", "Eisen", "Elch", "Ente", "Erde", "Erfolg", "Ernte", "Fahne", "Fahrt", "Falke", "Farbe", "Feld", "Fenster", "Ferien", "Feuer", "Fisch", "Flasche", "Fledermaus", "Fleisch", "Fluss", "Flut", "Flügel", "Foto", "Frage", "Freund", "Frosch", "Frucht", "Fuchs", "Futter", "Gabel", "Garten", "Geheimnis", "Geige", "Geist", "Geld", "Gemüse", "Giraffe", "Glas", "Glück", "Gold", "Gott", "Grab", "Gras", "Greif", "Gruppe", "Gurke", "Hammer", "Hand", "Hase", "Haus", "Herbst", "Himmel", "Hirsch", "Hof", "Hose", "Huhn", "Hund", "Hunger", "Hut", "Igel", "Insel", "Jacke", "Jagd", "Jahr", "Junge", "Käfer", "Kaffee", "Kaiser", "Kamel", "Kamm", "Kanal", "Kanne", "Käse", "Katze", "Keller", "Kerze", "Kette", "Kind", "Kirche", "Kiste", "Klang", "Klee", "Knochen", "Koch", "Koffer", "Kohle", "König", "Korb", "Korn", "Kraft", "Kraken", "Kranz", "Kreuz", "Kuh", "Kuss", "Lampe", "Landschaft", "Leben", "Lehrer", "Leine", "Leiter", "Licht", "Lied", "Löffel", "Luft", "Lust", "Magie", "Maler", "Maus", "Meer", "Messer", "Milch", "Mühle", "Müller", "Mund", "Mütze", "Nacht", "Nadel", "Nase", "Nest", "Netz", "Nixe", "Not", "Ofen", "Ohr", "Onkel", "Orange", "Ozean", "Paket", "Palme", "Panda", "Papier", "Pferd", "Pilz", "Platz", "Pokal", "Punkt", "Puppe", "Qualle", "Quark", "Rabe", "Rache", "Rad", "Rakete", "Regen", "Reh", "Reifen", "Ring", "Roboter", "Rose", "Rücken", "Rudel", "Saal", "Sache", "Salz", "Sarg", "Schild", "Schloss", "Schnee", "Schrank", "Schuh", "See", "Segel", "Seife", "Sofa", "Sonne", "Spaten", "Spiegel", "Stadt", "Stein", "Stift", "Stuhl", "Tafel", "Tag", "Tanne", "Tasse", "Tier", "Tiger", "Tochter", "Turm");
+        random = new Random();
+    }
+
+    public String getEnglishWord() {
+        return englishWords.get(random.nextInt(200));
+    }
+
+    public String getGermanWord() {
+        return germanWords.get(random.nextInt(200));
+    }
 }

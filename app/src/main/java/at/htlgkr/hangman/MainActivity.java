@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import at.htlgkr.hangman.databinding.ActivityMainBinding;
 import at.htlgkr.hangman.game.GameFragment;
+import at.htlgkr.hangman.newgame.NewGameFragment;
 import at.htlgkr.hangman.pvsc.PvsCFragment;
 import at.htlgkr.hangman.pvsp.PvsPFragment;
 import at.htlgkr.hangman.start.StartFragment;
@@ -41,30 +42,30 @@ public class MainActivity extends AppCompatActivity {
 
             switch (state) {
                 case MainViewModel.START: {
-                    fragmentTransaction.add(R.id.main, new StartFragment(), "FRAGMENT START");
+                    fragmentTransaction.replace(R.id.main, new StartFragment(), "FRAGMENT START");
                     break;
                 }
 
                 case MainViewModel.PVSP: {
-                    fragmentTransaction.add(R.id.main, new PvsPFragment(), "FRAGMENT PVSP");
+                    fragmentTransaction.replace(R.id.main, new PvsPFragment(), "FRAGMENT PVSP");
                     fragmentTransaction.addToBackStack("");
                     break;
                 }
 
                 case MainViewModel.PVSC: {
-                    fragmentTransaction.add(R.id.main, new PvsCFragment(), "FRAGMENT PVSC");
+                    fragmentTransaction.replace(R.id.main, new PvsCFragment(), "FRAGMENT PVSC");
                     fragmentTransaction.addToBackStack("");
                     break;
                 }
 
                 case MainViewModel.GAME: {
-                    fragmentTransaction.add(R.id.main, new GameFragment(), "FRAGMENT GAME");
+                    fragmentTransaction.replace(R.id.main, new GameFragment(), "FRAGMENT GAME");
                     fragmentTransaction.addToBackStack("");
                     break;
                 }
 
                 case MainViewModel.NEWGAME: {
-                    fragmentTransaction.add(R.id.main, new GameFragment(), "FRAGMENT NEWGAME");
+                    fragmentTransaction.replace(R.id.main, new NewGameFragment(), "FRAGMENT NEWGAME");
                     fragmentTransaction.addToBackStack("");
                 }
             }

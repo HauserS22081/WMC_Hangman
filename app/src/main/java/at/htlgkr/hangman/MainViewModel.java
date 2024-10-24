@@ -12,7 +12,7 @@ public class MainViewModel extends ViewModel {
     public static final int GAME = 3;
     public static final int NEWGAME = 4;
 
-    private MutableLiveData<Integer> _state = new MutableLiveData<>();
+    private MutableLiveData<Integer> _state = new MutableLiveData<>(START);
     public LiveData<Integer> state = _state;
 
     public void showStart() {

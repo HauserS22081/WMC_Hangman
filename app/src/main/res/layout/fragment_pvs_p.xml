@@ -19,7 +19,7 @@
         android:hint="Zu erratendes Wort eingeben">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ti_letters"
+            android:id="@+id/ti_word"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

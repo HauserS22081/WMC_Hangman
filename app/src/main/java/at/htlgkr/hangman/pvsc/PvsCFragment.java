@@ -3,64 +3,53 @@ package at.htlgkr.hangman.pvsc;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import at.htlgkr.hangman.R;
+import at.htlgkr.hangman.HangmanViewModel;
+import at.htlgkr.hangman.MainViewModel;
+import at.htlgkr.hangman.databinding.FragmentPvsCBinding;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PvsCFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class PvsCFragment extends Fragment {
+public class PvsCFragment extends Fragment implements View.OnClickListener {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private FragmentPvsCBinding binding;
 
     public PvsCFragment() {
-        // Required empty public constructor
-    }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PvsCFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PvsCFragment newInstance(String param1, String param2) {
-        PvsCFragment fragment = new PvsCFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pvs_c, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentPvsCBinding.inflate(inflater, container, false);
+
+        binding.btEasy.setOnClickListener(this);
+        binding.btHard.setOnClickListener(this);
+
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onClick(View view) {
+        HangmanViewModel hangmanViewModel = new ViewModelProvider(requireActivity()).get(HangmanViewModel.class);
+        MainViewModel mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
+
+        PvsCController controller = new PvsCController();
+        String word;
+        if (view.equals(binding.btEasy)) {
+            word = controller.getGermanWord();
+        } else {
+            word = controller.getEnglishWord();
+        }
+
+        hangmanViewModel.setWord(word);
+        mainViewModel.showGame();
     }
 }
